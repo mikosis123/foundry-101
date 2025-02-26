@@ -1,13 +1,26 @@
-// SPDX-License-Identifier : MIT
-pragma solidity ^ 0.8.20;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
 
-contract ConfigFundMe{
+contract ConfigFundMe {
+    NetworkConfig public activeNetworkConfig;
 
-function getSepolia() public {
+    struct NetworkConfig {
+        address pricefeedaddress;
+    }
 
-}
-function getAvilanch() public {
-    
-}
+    constructor() {
+        if (block.chainid == 11155111) {
+            activeNetworkConfig = getSepolia();
+        } else {
+            activeNetworkConfig = getAvalanche();
+        }
+    }
 
+    function getSepolia() public pure returns (NetworkConfig memory) {
+        return NetworkConfig({pricefeedaddress: 0x694AA1769357215DE4FAC081bf1f309aDC325306});
+    }
+
+    function getAvalanche() public pure returns (NetworkConfig memory) {
+        return NetworkConfig({pricefeedaddress: 0x694AA1769357215DE4FAC081bf1f309aDC325306});
+    }
 }
